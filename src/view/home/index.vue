@@ -1,6 +1,6 @@
 <template>
     <div>
-        沉默经济上啊
+        测试 actions
     </div>
 </template>
 
