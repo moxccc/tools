@@ -1,11 +1,11 @@
 <template>
     <div>
-        测试 actions111
+        这个是{{  a }}版本
     </div>
 </template>
 
 <script setup>
-
+let a=import.meta.env.VITE_API_BASE_URL
 </script>
 
 <style lang="scss" scoped>
