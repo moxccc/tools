@@ -1,10 +1,6 @@
 name: Debug Compilation
 
-on:
-  push:
-    tags:
-      - 'v*'
-
+on: push
 jobs:
   build:
     runs-on: ${{ matrix.os }}
