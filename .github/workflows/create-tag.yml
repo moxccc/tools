@@ -34,6 +34,7 @@ jobs:
       env:
         CURRENT_DATE: ${{ env.current_date }}
         COMMIT_COUNT: ${{ env.commit_count }}
+        GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
       run: |
         NEW_TAG="v${CURRENT_DATE}.${COMMIT_COUNT}"
         echo "New tag: $NEW_TAG"
