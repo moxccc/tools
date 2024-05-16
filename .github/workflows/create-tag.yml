@@ -34,10 +34,10 @@ jobs:
       env:
         CURRENT_DATE: ${{ env.current_date }}
         COMMIT_COUNT: ${{ env.commit_count }}
+        GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
       run: |
         NEW_TAG="v${CURRENT_DATE}.${COMMIT_COUNT}"
         echo "New tag: $NEW_TAG"
         git tag -a "$NEW_TAG" -m "Release $NEW_TAG"
         git push origin "$NEW_TAG"
-      env:
-        GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+        
