@@ -13,6 +13,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Set up Git user
+      run: |
+        git config user.name "moxccc"
+        git config user.email "moxccc@github.com"
+
     - name: Get current date
       id: get_date
       run: |
