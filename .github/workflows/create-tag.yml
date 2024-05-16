@@ -13,11 +13,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Git user
-      run: |
-        git config user.name "moxccc"
-        git config user.email "moxccc@github.com"
-
     - name: Get current date
       id: get_date
       run: |
@@ -39,5 +34,4 @@ jobs:
         NEW_TAG="v${CURRENT_DATE}.${COMMIT_COUNT}"
         echo "New tag: $NEW_TAG"
         git tag -a "$NEW_TAG" -m "Release $NEW_TAG"
-        git push origin "$NEW_TAG"
         
