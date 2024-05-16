@@ -1,4 +1,4 @@
-name: Release Compilation
+name: Release on Tag
 
 on:
   push:
@@ -6,38 +6,33 @@ on:
       - 'v*'
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            runtime: linux-x64
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+  release:
+    runs-on: ubuntu-latest
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '22'
-        
-    - name: Build
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Build project
       run: |
+        # 这里运行你的构建命令，例如：
         npm install
         npm run build
-      timeout-minutes: 10 
-        
-    - name: Zip the build output
+        echo "Building project..."
+
+    - name: Create ZIP file
       run: |
         cd dist
-        zip -r "./build-release.zip" .
-      timeout-minutes: 5
-      shell: pwsh
-      
-    - name: Upload
+        zip -r release.zip .
+
+    - name: Upload Release
       uses: softprops/action-gh-release@v2
       env:
-        GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        files: dist/*.zip
+        files: dist/release.zip
+        tag_name: ${{ github.ref }}
+        release_name: "Release ${{ github.ref }}"
+        body: ${{ github.event.head_commit.message }}
+        draft: false
+        prerelease: false

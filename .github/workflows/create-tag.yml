@@ -1,0 +1,41 @@
+name: Create Tag on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Git user
+      run: |
+        git config user.name "moxccc"
+        git config user.email "moxccc@github.com"
+
+    - name: Get current date
+      id: get_date
+      run: |
+        echo "current_date=$(date +'%y.%m.%d')" >> $GITHUB_ENV
+
+    - name: Get commit count for the day
+      id: get_commit_count
+      run: |
+        COMMIT_COUNT=$(git rev-list --count --since=midnight --all)
+        COMMIT_COUNT=$(printf "%02d" $COMMIT_COUNT)
+        echo "commit_count=$COMMIT_COUNT" >> $GITHUB_ENV
+
+    - name: Create new tag
+      env:
+        CURRENT_DATE: ${{ env.current_date }}
+        COMMIT_COUNT: ${{ env.commit_count }}
+      run: |
+        NEW_TAG="v${CURRENT_DATE}.${COMMIT_COUNT}"
+        echo "New tag: $NEW_TAG"
+        git tag -a "$NEW_TAG" -m "Release $NEW_TAG"
+        git push origin "$NEW_TAG"
