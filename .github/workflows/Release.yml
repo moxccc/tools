@@ -32,9 +32,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
       with:
-        files: dist/release.zip
-        tag_name: ${{ github.ref }}
-        release_name: "Release ${{ github.ref }}"
-        body: ${{ github.event.head_commit.message }}
-        draft: false
-        prerelease: false
+        files: dist/*
+        # tag_name: ${{ github.ref }}
+        # release_name: "Release ${{ github.ref }}"
+        # body: ${{ github.event.head_commit.message }}
+        # draft: false
+        # prerelease: false
